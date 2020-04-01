@@ -13,6 +13,16 @@ Simple movie API using omdbapi database.
 npm install
 ```
 
+## Environment Variables
+
+1. Copy .env file
+
+```
+cp .env.example .env
+```
+
+2. Fill the OMDB_KEY on .env file
+
 ## Running
 
 Development mode
