@@ -4,8 +4,16 @@
   "description": "Simple movie API",
   "main": "index.js",
   "scripts": {
+    "start": "node serve.js",
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rendy Febry",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }

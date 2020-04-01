@@ -15,6 +15,14 @@ npm install
 
 ## Running
 
+Development mode
+
+```
+npm run dev
+```
+
+Production mode
+
 ```
 npm start
 ```
