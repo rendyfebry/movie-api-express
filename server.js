@@ -55,4 +55,11 @@ app.get("/detail/:movieID", (req, res) => {
     });
 });
 
+// 404 Handler
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Not Found!"
+  });
+});
+
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
