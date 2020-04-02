@@ -1,13 +1,58 @@
 const express = require("express");
+const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT;
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Hello World!"
-  });
+const omdbHost = process.env.OMDB_HOST;
+const omdbKey = process.env.OMDB_KEY;
+
+app.get("/search", (req, res) => {
+  const searchQuery = req.query.q;
+  if (!searchQuery || searchQuery == "") {
+    return res.status(400).json({
+      message: "Please input q params: http://localhost:3000/search?q=Batman"
+    });
+  }
+
+  const url = `${omdbHost}/?apikey=${omdbKey}&s=${searchQuery}`;
+
+  return axios
+    .get(url)
+    .then(response => {
+      return res.json(response.data);
+    })
+    .catch(err => {
+      const { response, message } = err;
+      const errStatus = response && response.status ? response.status : 500;
+      const errMsg = message || "Unable to fetch movie detail";
+
+      return res.status(errStatus).json({
+        message: errMsg
+      });
+    });
+});
+
+app.get("/detail/:movieID", (req, res) => {
+  console.log(req.params);
+
+  const url = `${omdbHost}/?apikey=${omdbKey}&i=${req.params.movieID}`;
+
+  return axios
+    .get(url)
+    .then(response => {
+      return res.json(response.data);
+    })
+    .catch(err => {
+      const { response, message } = err;
+      const errStatus = response && response.status ? response.status : 500;
+      const errMsg = message || "Unable to fetch movie detail";
+
+      return res.status(errStatus).json({
+        message: errMsg
+      });
+    });
 });
 
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
