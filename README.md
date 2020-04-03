@@ -18,7 +18,7 @@ npm install
 1. Copy .env file
 
 ```
-cp .env.example .env
+cp config/.env.example .env
 ```
 
 2. Fill the OMDB_KEY on .env file
