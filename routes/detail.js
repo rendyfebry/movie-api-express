@@ -1,11 +1,15 @@
 const express = require("express");
 const MovieController = require("../controllers/movie");
+const LoggerMiddleware = require("../middlewares/logger");
+const { SendError } = require("../controllers/utils");
 
 const router = express.Router();
 const movieCtrl = new MovieController();
 
-router.get("/:movieID", (req, res) => {
-  console.log(req.params);
+router.get("/:movieID", LoggerMiddleware, (req, res) => {
+  if (req.params.movieID && req.params.movieID.length !== 9) {
+    return SendError(res, 400, "Incorrect MovieID");
+  }
 
   return movieCtrl
     .getDetail(req.params.movieID)
@@ -17,9 +21,7 @@ router.get("/:movieID", (req, res) => {
       const errStatus = response && response.status ? response.status : 500;
       const errMsg = message || "Unable to fetch movie detail";
 
-      return res.status(errStatus).json({
-        message: errMsg
-      });
+      return SendError(res, errStatus, errMsg);
     });
 });
 

@@ -1,15 +1,15 @@
 const express = require("express");
 const MovieController = require("../controllers/movie");
+const LoggerMiddleware = require("../middlewares/logger");
+const { SendError } = require("../controllers/utils");
 
 const router = express.Router();
 const movieCtrl = new MovieController();
 
-router.get("/", (req, res) => {
+router.get("/", LoggerMiddleware, (req, res) => {
   const searchQuery = req.query.q;
   if (!searchQuery || searchQuery == "") {
-    return res.status(400).json({
-      message: "Please input q params: http://localhost:3000/search?q=Batman"
-    });
+    return SendError(res, 400, "Please input q params");
   }
 
   movieCtrl
@@ -22,9 +22,7 @@ router.get("/", (req, res) => {
       const errStatus = response && response.status ? response.status : 500;
       const errMsg = message || "Unable to fetch movie detail";
 
-      return res.status(errStatus).json({
-        message: errMsg
-      });
+      return SendError(res, errStatus, errMsg);
     });
 });
 
