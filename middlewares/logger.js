@@ -1,6 +1,6 @@
 const Logs = require("../models/log");
 
-const Logger = async (req, res, next) => {
+function Logger(req, res, next) {
   const { method, baseUrl, query } = req;
   const stringQuery = JSON.stringify(query);
 
@@ -11,12 +11,12 @@ const Logger = async (req, res, next) => {
     query: stringQuery
   };
 
-  await Logs.create(logData);
+  Logs.create(logData);
 
   const log = `[${new Date().toLocaleString()}] ${method} ${baseUrl} ${stringQuery}`;
   console.log(log);
 
   next();
-};
+}
 
 module.exports = Logger;
