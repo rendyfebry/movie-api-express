@@ -11,9 +11,16 @@ app.use("/search", searchRoutes);
 app.use("/detail", detailRoutes);
 
 // 404 Handler
-app.use((req, res, next) => {
+app.use("*", (req, res) => {
   res.status(404).json({
     message: "Not Found!"
+  });
+});
+
+// error handler
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    message: err.message || "Something wrong!"
   });
 });
 
