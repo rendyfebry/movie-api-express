@@ -37,6 +37,26 @@ Production mode
 npm start
 ```
 
+Run in Docker
+
+```
+docker-compose up
+```
+
+## API Request
+
+Search Movie
+
+```
+curl -L -X GET 'localhost:3000/search?q=batman'
+```
+
+Get Movie Detail
+
+```
+curl -L -X GET 'localhost:3000/detail/tt2975590'
+```
+
 ## Test
 
 ```
