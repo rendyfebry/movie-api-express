@@ -1,4 +1,4 @@
-const OMDB = require("../data-access/Omdb");
+const OMDB = require("../data-access/omdb");
 
 const omdbHost = process.env.OMDB_HOST;
 const omdbKey = process.env.OMDB_KEY;
